@@ -175,8 +175,9 @@ const computePayment = (
     }).toLocal();
 
     isReturnee =
-      previousExitTime.diff(currentEntrytime, "hours").valueOf() / hrMilliSec <=
-      1;
+      Math.abs(
+        previousExitTime.diff(currentEntrytime, "hours").valueOf() / hrMilliSec
+      ) <= 1;
 
     entryTime = isReturnee ? previousEntryTime : currentEntrytime;
   } else {
@@ -199,9 +200,8 @@ const computePayment = (
     : 0;
 
   // total consume hours
-  const hoursConsume: number = Math.round(
-    exitTime.diff(entryTime, "hours").valueOf() / hrMilliSec
-  );
+  const hoursConsume: number =
+    exitTime.diff(entryTime, "hours").valueOf() / hrMilliSec;
 
   // check time difference
   if (hoursConsume < 0) {
